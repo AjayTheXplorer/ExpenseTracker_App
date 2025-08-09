@@ -12,6 +12,11 @@ import javax.inject.Inject
 
 data class DailyTotal(val dayLabel: String, val total: Double)
 
+data class WeeklyExpense(
+    val dayLabel: String,
+    val total: Double
+)
+
 @HiltViewModel
 class ExpenseViewModel @Inject constructor(
     private val repository: ExpenseRepository

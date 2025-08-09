@@ -1,7 +1,10 @@
 package com.example.expensetracker_app.view.screens
 
+import android.os.Environment
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,11 +15,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.expensetracker_app.viewModel.ExpenseViewModel
+import com.example.expensetracker_app.viewModel.WeeklyExpense
+import java.io.File
+import java.io.FileWriter
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun ExpenseReportScreen(vm: ExpenseViewModel) {
-    val weekly by vm.weeklySummary.collectAsState()
+    val context = LocalContext.current
+    val weekly by vm.weeklySummary.collectAsStateWithLifecycle(emptyList())
 
     Column(
         modifier = Modifier
@@ -53,13 +62,12 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
                     val stepHeight = size.height / tickCount
                     for (i in 0..tickCount) {
                         val y = i * stepHeight
-                        // Draw text aligned exactly with the grid line
                         drawContext.canvas.nativeCanvas.apply {
                             val label = "₹${formatToK((tickCount - i) * tickStep)}"
                             drawText(
                                 label,
                                 0f,
-                                y + 4.sp.toPx() / 2, // small offset for visual centering
+                                y + 4.sp.toPx() / 2,
                                 android.graphics.Paint().apply {
                                     color = android.graphics.Color.WHITE
                                     textSize = 12.sp.toPx()
@@ -76,7 +84,6 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
                     .weight(1f)
                     .height(chartHeight)
             ) {
-                // Grid lines
                 Canvas(
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -92,7 +99,6 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
                     }
                 }
 
-                // Bars
                 Row(
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -139,9 +145,52 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        // ✅ CSV Download Button
+        Button(onClick = {
+            val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val csvFile = File(downloadsDir, "expense_report.csv")
+
+            try {
+                FileWriter(csvFile).use { writer ->
+                    writer.append("Day,Total\n")
+                    weekly.forEach { dt ->
+                        writer.append("${dt.dayLabel},${dt.total}\n")
+                    }
+                }
+                Toast.makeText(context, "CSV saved to ${csvFile.absolutePath}", Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error saving CSV: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }) {
+            Text("Download CSV")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
         Text("Category-wise breakdown and export features can be added later.")
     }
 }
+
+
+// CSV Saving Function
+fun saveExpensesToCsv(weekly: List<WeeklyExpense>) {
+    try {
+        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        if (!downloadsDir.exists()) downloadsDir.mkdirs()
+
+        val file = File(downloadsDir, "Expense_Report.csv")
+        FileWriter(file).use { writer ->
+            writer.append("Day,Total\n")
+            weekly.forEach {
+                writer.append("${it.dayLabel},${it.total}\n")
+            }
+        }
+        println("✅ CSV saved to: ${file.absolutePath}")
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
 
 // Helper function for compact K formatting
 fun formatToK(value: Double): String {
