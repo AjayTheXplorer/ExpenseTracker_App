@@ -172,26 +172,6 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
 }
 
 
-// CSV Saving Function
-fun saveExpensesToCsv(weekly: List<WeeklyExpense>) {
-    try {
-        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        if (!downloadsDir.exists()) downloadsDir.mkdirs()
-
-        val file = File(downloadsDir, "Expense_Report.csv")
-        FileWriter(file).use { writer ->
-            writer.append("Day,Total\n")
-            weekly.forEach {
-                writer.append("${it.dayLabel},${it.total}\n")
-            }
-        }
-        println("✅ CSV saved to: ${file.absolutePath}")
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-}
-
-
 // Helper function for compact K formatting
 fun formatToK(value: Double): String {
     return when {
