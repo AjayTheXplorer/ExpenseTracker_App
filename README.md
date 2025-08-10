@@ -83,10 +83,7 @@ Total AI interactions: 127 prompts with 3.2 average iterations per solution
 
 | Expense Entry | Expense List | Report | Category Breakdown |
 |---------------|--------------|--------|---------------------|
-| <img src="https://github.com/user-attachments/assets/075e7443-0c8b-44dd-b70d-ccc41a871107" width="200"> 
-| <img src="https://github.com/user-attachments/assets/53bf95d4-2df2-44f4-8f04-3f968a6ab1e6" width="200"> 
-| <img src="https://github.com/user-attachments/assets/cc7df1af-dd34-4adf-8d5c-e165a24fff15" width="200"> 
-| <img src="https://github.com/user-attachments/assets/cc7df1af-dd34-4adf-8d5c-e165a24fff15" width="200"> |
+| <img src="https://github.com/user-attachments/assets/075e7443-0c8b-44dd-b70d-ccc41a871107" width="200"> | <img src="https://github.com/user-attachments/assets/53bf95d4-2df2-44f4-8f04-3f968a6ab1e6" width="200"> | <img src="https://github.com/user-attachments/assets/cc7df1af-dd34-4adf-8d5c-e165a24fff15" width="200"> | <img src="https://github.com/user-attachments/assets/807e8b1e-cee4-413b-9e6e-be3f6716908a" width="200"> |
 
 
 ## Installation
