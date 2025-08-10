@@ -1,15 +1,5 @@
 # Smart Daily Expense Tracker App
 
-
-https://github.com/user-attachments/assets/075e7443-0c8b-44dd-b70d-ccc41a871107
-
-https://github.com/user-attachments/assets/53bf95d4-2df2-44f4-8f04-3f968a6ab1e6
-
-https://github.com/user-attachments/assets/cc7df1af-dd34-4adf-8d5c-e165a24fff15
-
-https://github.com/user-attachments/assets/807e8b1e-cee4-413b-9e6e-be3f6716908a
-
-
 ## App Overview
 An Android expense tracker for small business owners that digitizes daily expense management. Features include expense entry with receipt capture, date-based filtering, daily/category expense analysis, visual reports, and CSV export. Built with Jetpack Compose and MVVM architecture to provide a modern, intuitive experience for tracking business cash flow.
 
@@ -48,7 +38,7 @@ Total AI interactions: 127 prompts with 3.2 average iterations per solution
 `"Write a Room DAO for Expense entity with queries: daily totals by date range, category sums, and paginated expense list"`  
 → Refined: `"Optimize query to load expenses between dates with Flow support for real-time updates"`
 
-## Features Implemented
+## Features Implemented by me
 ### Core Features
 - [x] Expense Entry Screen with validation
 - [x] Expense List with date filtering
@@ -75,6 +65,51 @@ Total AI interactions: 127 prompts with 3.2 average iterations per solution
 - [x] Responsive layout
 - [x] Expense grouping toggles
 - [x] Empty state handling
+
+
+## Required Features Implemented
+### Expense Entry Screen
+- [x] Input fields:
+- [x] Title (text)
+- [x] Amount (₹)
+- [x] Category (mocked list: Staff, Travel, Food, Utility)
+- [x] Optional Notes (max 100 chars)
+- [x] Optional Receipt Image (upload or mock)
+- [x] Receipt capture (mock implementation)
+- [x] Submit Button: Adds expense, shows Toast, animates entry
+- [x] Show real-time “Total Spent Today” at top
+
+
+### Expense List Screen
+- [x] Today (default)
+- [x] Previous dates via calendar or filter
+- [x] Group by category or time (toggle)
+- [x] Show: Total count, total amount, empty state
+
+
+
+### Expense Report Screen
+- [x] Mock report for last 7 days: (Real time report implemented)
+- [x] Daily totals
+- [x] Category-wise totals
+- [x] Bar or line chart (Real implementation according to the expenses)
+- [x] Export (done): Simulate CSV export
+- [ ] Trigger Share intent (optional)
+- [x] State Management & Data Layer
+- [x] ViewModel + StateFlow
+- [x] Room DB implemented
+- [x] Handle screen transitions via Navigation
+
+
+### Bonus Challenges
+- [ ] Theme switcher (Light/Dark)
+- [x] Persist data locally (Room/Datastore)
+- [x] Animation on add
+- [ ] Duplicate detection
+- [x] Validation (amount > 0, title non-empty)
+- [x] Offline-first sync (mock)
+- [x] Reusable UI components
+
 
 ## APK Download
 [Download Latest Release](https://github.com/AjayTheXplorer/ExpenseTracker_App.git)
