@@ -21,11 +21,29 @@ import com.example.expensetracker_app.viewModel.WeeklyExpense
 import java.io.File
 import java.io.FileWriter
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @Composable
 fun ExpenseReportScreen(vm: ExpenseViewModel) {
     val context = LocalContext.current
     val weekly by vm.weeklySummary.collectAsStateWithLifecycle(emptyList())
+
+    // Refresh each time the screen resumes
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                vm.refreshWeeklySummary()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    // Fixed width for left Y-axis labels
+    val leftAxisWidth = 56.dp
 
     Column(
         modifier = Modifier
@@ -52,11 +70,12 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Bottom
         ) {
-            // Y-axis labels perfectly aligned with grid lines
+            // Y-axis labels
             Box(
                 modifier = Modifier
+                    .width(leftAxisWidth)
                     .height(chartHeight)
-                    .padding(end = 4.dp)
+                    .padding(end = 8.dp)
             ) {
                 Canvas(modifier = Modifier.matchParentSize()) {
                     val stepHeight = size.height / tickCount
@@ -78,15 +97,14 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
                 }
             }
 
-            // Chart with bars + grid lines
+            // Chart area
             Box(
                 modifier = Modifier
                     .weight(1f)
                     .height(chartHeight)
             ) {
-                Canvas(
-                    modifier = Modifier.fillMaxSize()
-                ) {
+                // Grid lines
+                Canvas(modifier = Modifier.fillMaxSize()) {
                     val stepHeight = size.height / tickCount
                     for (i in 0..tickCount) {
                         val y = i * stepHeight
@@ -99,13 +117,15 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
                     }
                 }
 
+                // Bars
                 Row(
                     modifier = Modifier.fillMaxSize(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.Bottom
                 ) {
                     weekly.forEach { dt ->
-                        val barHeight = ((dt.total / maxTotal) * chartHeight.value).dp
+                        val frac = if (maxTotal <= 0.0) 0f else (dt.total / maxTotal).toFloat().coerceIn(0f, 1f)
+                        val barHeight = chartHeight * frac
                         Box(
                             modifier = Modifier
                                 .width(20.dp)
@@ -136,7 +156,7 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 32.dp),
+                .padding(start = leftAxisWidth),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             weekly.forEach { dt ->
@@ -146,7 +166,7 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ✅ CSV Download Button
+        // CSV Download Button
         Button(onClick = {
             val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
             val csvFile = File(downloadsDir, "expense_report.csv")
@@ -170,6 +190,8 @@ fun ExpenseReportScreen(vm: ExpenseViewModel) {
         Text("Category-wise breakdown and export features can be added later.")
     }
 }
+
+
 
 
 // Helper function for compact K formatting

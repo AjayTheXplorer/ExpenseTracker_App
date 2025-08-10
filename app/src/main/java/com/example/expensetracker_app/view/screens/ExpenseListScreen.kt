@@ -42,6 +42,11 @@ fun ExpenseListScreen(vm: ExpenseViewModel) {
     var groupByCategory by remember { mutableStateOf(false) }
     var selectedButton by remember { mutableStateOf("Today") }
 
+    // 🔹 Auto-refresh when entering screen
+    LaunchedEffect(Unit) {
+        vm.refreshData() // Make sure your ViewModel has this method
+    }
+
     // State for date picker
     var showDatePicker by remember { mutableStateOf(false) }
     val selectedDate = remember { mutableStateOf(System.currentTimeMillis()) }

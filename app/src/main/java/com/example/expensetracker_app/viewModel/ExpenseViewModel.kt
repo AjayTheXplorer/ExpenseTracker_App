@@ -34,21 +34,23 @@ class ExpenseViewModel @Inject constructor(
             .map { it ?: 0.0 }
     }.stateIn(viewModelScope, SharingStarted.Lazily, 0.0)
 
-    // Weekly summary - last 7 days totals
-    val weeklySummary: StateFlow<List<DailyTotal>> = flow {
-        // compute start and end for 7 days and fetch combined
-        val today = Calendar.getInstance()
-        val totals = mutableListOf<DailyTotal>()
-        for (i in 6 downTo 0) {
-            val cal = Calendar.getInstance()
-            cal.add(Calendar.DAY_OF_YEAR, -i)
-            val start = dayStart(cal.timeInMillis)
-            val end = dayEnd(cal.timeInMillis)
-            val sum = repository.getTotalAmountByDateRange(start, end).first() ?: 0.0
-            val label = "${cal.get(Calendar.DAY_OF_MONTH)}/${cal.get(Calendar.MONTH)+1}"
-            totals.add(DailyTotal(label, sum))
+    // --- Weekly summary with explicit refresh trigger ---
+    private val _weeklyRefreshTrigger = MutableStateFlow(System.currentTimeMillis())
+    val weeklySummary: StateFlow<List<DailyTotal>> = _weeklyRefreshTrigger.flatMapLatest {
+        flow {
+            val totals = mutableListOf<DailyTotal>()
+            for (i in 6 downTo 0) {
+                val cal = Calendar.getInstance()
+                cal.add(Calendar.DAY_OF_YEAR, -i)
+                val start = dayStart(cal.timeInMillis)
+                val end = dayEnd(cal.timeInMillis)
+                // repository.getTotalAmountByDateRange(...) returns a Flow<Double?>, so first() is used to get the value
+                val sum = repository.getTotalAmountByDateRange(start, end).first() ?: 0.0
+                val label = "${cal.get(Calendar.DAY_OF_MONTH)}/${cal.get(Calendar.MONTH) + 1}"
+                totals.add(DailyTotal(label, sum))
+            }
+            emit(totals)
         }
-        emit(totals)
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun setDate(date: Long) { _selectedDate.value = date }
@@ -78,4 +80,13 @@ class ExpenseViewModel @Inject constructor(
             set(Calendar.SECOND, 59)
             set(Calendar.MILLISECOND, 999)
         }.timeInMillis
+
+    fun refreshData() {
+        setDate(System.currentTimeMillis()) // existing behavior kept
+    }
+
+    // Call this when you want weeklySummary recomputed (we call this from the composable on ON_RESUME)
+    fun refreshWeeklySummary() {
+        _weeklyRefreshTrigger.value = System.currentTimeMillis()
+    }
 }
