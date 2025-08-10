@@ -80,7 +80,7 @@ Total AI interactions: 127 prompts with 3.2 average iterations per solution
 ## Screenshots
 | Expense Entry | Expense List | Report | Category Breakdown |
 |---------------|--------------|--------|---------------------|
-| <img src="screenshots/075e7443-0c8b-44dd-b70d-ccc41a871107.png" width="200"> | <img src="screenshots/expense-list.png" width="200"> | <img src="screenshots/expense-report.png" width="200"> | <img src="screenshots/category-totals.png" width="200"> |
+| <img src="screenshots/075e7443-0c8b-44dd-b70d-ccc41a871107.jpeg" width="200"> | <img src="screenshots/expense-list.png" width="200"> | <img src="screenshots/expense-report.png" width="200"> | <img src="screenshots/category-totals.png" width="200"> |
 
 ## Installation
 1. Clone repository:
