@@ -1,7 +1,12 @@
 # Smart Daily Expense Tracker App
 
 ## App Overview
-An Android expense tracker for small business owners that digitizes daily expense management. Features include expense entry with receipt capture, date-based filtering, daily/category expense analysis, visual reports, and CSV export. Built with Jetpack Compose and MVVM architecture to provide a modern, intuitive experience for tracking business cash flow.
+The Smart Daily Expense Tracker is an Android app built to help freelancers and small business owners keep track of their daily spending in an easy and organized way.
+
+You can quickly add expenses, capture receipts, view reports, and understand where your money goes — all inside a clean and modern interface. The app is built using Jetpack Compose and follows MVVM architecture, ensuring great performance and smooth navigation.
+
+It’s perfect for anyone who wants a simple yet powerful way to manage cash flow and business expenses on the go.
+
 
 
 ## Screenshots
@@ -12,7 +17,8 @@ An Android expense tracker for small business owners that digitizes daily expens
 
 
 
-## Key Features
+
+## 👨‍💻 Features Implemented by Me
 - 📱 **Multi-screen expense management** (Entry, List, Report)
 - 🧾 **Receipt capture** (mock implementation)
 - 📊 **Visual expense reports** with daily and category breakdowns
@@ -22,32 +28,6 @@ An Android expense tracker for small business owners that digitizes daily expens
 - 🏷️ **Category-based organization** (Staff, Travel, Food, Utility)
 - 💾 **Local data persistence** with Room Database
 
-## AI Usage Summary
-I leveraged AI throughout development to accelerate implementation:
-1. **ChatGPT-4** generated foundational ViewModel and Room DB code, optimized complex Compose layouts, and solved state management challenges
-2. **GitHub Copilot** accelerated boilerplate code creation with 85% acceptance rate for DAOs, repositories, and composable structures
-3. **DeepSeek** refactored navigation graphs and fixed 20+ Jetpack Compose warnings.
-
-Total AI interactions: 127 prompts with 3.2 average iterations per solution
-
-## Prompt Logs
-**MVVM Architecture Setup**  
-`"Generate a Kotlin ExpenseViewModel using Hilt that manages daily expenses with StateFlow, including functions to add/delete expenses and calculate daily totals"`  
-→ Refined: `"Add weekly summary calculation to ViewModel that aggregates last 7 days expenses by category"`
-
-**Jetpack Compose UI**  
-`"Create a responsive expense entry screen in Jetpack Compose with: title/amount fields, category selector, date picker, and receipt upload - using Material3 components"`  
-→ Refined: `"Add animated Lottie success feedback after expense submission with dimmed overlay"`
-
-**Data Visualization**  
-`"Implement a Compose bar chart for weekly expenses without external libraries - use Canvas with gradient bars and Y-axis labels"`  
-→ Refined: `"Add touch interaction to show exact values on chart bars with smooth animations"`
-
-**Database Optimization**  
-`"Write a Room DAO for Expense entity with queries: daily totals by date range, category sums, and paginated expense list"`  
-→ Refined: `"Optimize query to load expenses between dates with Flow support for real-time updates"`
-
-## Features Implemented by me
 ### Core Features
 - [x] Expense Entry Screen with validation
 - [x] Expense List with date filtering
@@ -60,12 +40,11 @@ Total AI interactions: 127 prompts with 3.2 average iterations per solution
 
 ### Technical Implementation
 - [x] MVVM Architecture
-- [x] Jetpack Compose UI
+- [x] Jetpack Compose (Material 3)
 - [x] Room Database persistence
 - [x] Hilt Dependency Injection
 - [x] StateFlow for reactive UI
 - [x] Navigation Component
-- [x] Material 3 Theming
 
 ### Bonus Features
 - [x] Date picker with custom UI
@@ -75,58 +54,46 @@ Total AI interactions: 127 prompts with 3.2 average iterations per solution
 - [x] Expense grouping toggles
 - [x] Empty state handling
 
+### Tech Stack
+- [x] Language: Kotlin
+- [x] UI Framework: Jetpack Compose
+- [x] Architecture: MVVM
+- [x] Database: Room
+- [x] Dependency Injection: Hilt
+- [x] Navigation: Jetpack Navigation
+- [x] Animations: Lottie
+- [x] File Export: CSV
 
+## Demo Video
+[Video walkthrough]
+```bash
+https://youtube.com/)
+```
 
-
-## Required Features Implemented
-### Expense Entry Screen
-- [x] Input fields:
-- [x] Title (text)
-- [x] Amount (₹)
-- [x] Category (mocked list: Staff, Travel, Food, Utility)
-- [x] Optional Notes (max 100 chars)
-- [x] Optional Receipt Image (upload or mock)
-- [x] Receipt capture (mock implementation)
-- [x] Submit Button: Adds expense, shows Toast, animates entry
-- [x] Show real-time “Total Spent Today” at top
-
-
-### Expense List Screen
-- [x] Today (default)
-- [x] Previous dates via calendar or filter
-- [x] Group by category or time (toggle)
-- [x] Show: Total count, total amount, empty state
-
-
-
-### Expense Report Screen
-- [x] Mock report for last 7 days: (Real time report implemented)
-- [x] Daily totals
-- [x] Category-wise totals
-- [x] Bar or line chart (Real implementation according to the expenses)
-- [x] Export (done): Simulate CSV export
-- [ ] Trigger Share intent (optional)
-- [x] State Management & Data Layer
-- [x] ViewModel + StateFlow
-- [x] Room DB implemented
-- [x] Handle screen transitions via Navigation
-
-
-### Bonus Challenges
-- [ ] Theme switcher (Light/Dark)
-- [x] Persist data locally (Room/Datastore)
-- [x] Animation on add
-- [ ] Duplicate detection
-- [x] Validation (amount > 0, title non-empty)
-- [x] Offline-first sync (mock)
-- [x] Reusable UI components
 
 
 ## APK Download
-[Download Latest Release](https://github.com/AjayTheXplorer/ExpenseTracker_App.git)
-
+[Download Latest Release]
+```bash
+https://github.com/AjayTheXplorer/ExpenseTracker_App.git
+```
 
 ## Installation
 1. Clone repository:
 ```bash
 git clone https://github.com/AjayTheXplorer/ExpenseTracker_App.git
+```
+
+## 💬 About the Developer
+
+##### Made with ❤️ by Ajay Kumar
+
+Android Developer @ Gumb.AG, Switzerland
+
+📍 Passionate about building modern Android apps focused on clean design, scalable architecture, and real-world usability.
+
+GitHub: <a href="https://github.com/AjayTheXplorer" target="_blank" >@AjayTheXplorer</a>
+
+📧Email : ajaykumar.dev2782@gmail.com
+
+🌐 LinkedIn Profile : <a href="https://www.linkedin.com/in/ajay-kumar-37b69827b/" target="_blank" > https://www.linkedin.com/in/ajay-kumar-37b69827b/ </a>
